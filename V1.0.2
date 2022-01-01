@@ -1,0 +1,187 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+
+local Window = Library.CreateLib("Project: PL | VERSION 1.0.2", "Ocean")
+
+local gun = Window:NewTab("Guns")
+local team = Window:NewTab("Teams")
+local funs = Window:NewTab("Fun")
+local humans = Window:NewTab("Humanoid")
+local ultimates = Window:NewTab("Ultimate scripts")
+local settings = Window:NewTab("GUI settings")
+
+local guns = gun:NewSection("Gun and melee utility")
+local teams = team:NewSection("Teams")
+local fun = funs:NewSection("Fun stuff")
+local human = humans:NewSection("Humanoid abilities")
+local ultimate = ultimates:NewSection("Super awsome scripts")
+local setting = settings:NewSection("Ui settings")
+
+guns:NewButton("Get all guns (Not M4A1)", "gives all guns but not the M4A1", function()
+    local Weapon = {"AK-47"}
+	for i,v in pairs(workspace.Prison_ITEMS.giver:GetChildren()) do
+	    if v.Name == Weapon[1] then
+	        local lol = workspace.Remote.ItemHandler:InvokeServer(v.ITEMPICKUP)
+	    end
+	end
+	
+	local Weapon = {"Remington 870"}
+	for i,v in pairs(workspace.Prison_ITEMS.giver:GetChildren()) do
+	    if v.Name == Weapon[1] then
+	        local lol = workspace.Remote.ItemHandler:InvokeServer(v.ITEMPICKUP)
+	    end
+	end
+	
+	local Weapon = {"M9"}
+	for i,v in pairs(workspace.Prison_ITEMS.giver:GetChildren()) do
+	    if v.Name == Weapon[1] then
+	        local lol = workspace.Remote.ItemHandler:InvokeServer(v.ITEMPICKUP)
+	    end
+	end
+end)
+
+guns:NewButton("Mod gun You hold", "Mods the currently equipped Gun to math.huge", function()
+   local m = require(game:GetService('Players').LocalPlayer.Character:FindFirstChildOfClass("Tool").GunStates)
+                m.Damage = 100
+                m.MaxAmmo = math.huge
+                m.CurrentAmmo = math.huge
+                m.AutoFire = true
+                m.FireRate = 0
+end)
+
+guns:NewButton("Give all melee", "Gives user all melee tools", function()
+    local weapons = {"Crude Knife", "Sharpened stick", "Extendo mirror"}
+	for i, v in pairs(game.ReplicatedStorage.Tools:GetChildren()) do
+	    for j, k in pairs(weapons) do
+	        if v.Name == k then
+	            v:Clone().Parent = game.Players.LocalPlayer.Backpack
+	        end
+	    end
+	end
+end)
+
+teams:NewButton("prisoner", "Changes user's team into prisoner", function()
+    workspace.Remote.TeamEvent:FireServer("Bright orange") 
+end)
+teams:NewButton("Criminal", "Changes user's team into Criminal", function()
+    local LP = game.Players.LocalPlayer
+    local RE = LP.Character.HumanoidRootPart.Position
+    LP.Character.HumanoidRootPart.CFrame = CFrame.new(-919.958, 95.327, 2138.189)
+    wait(0.075)
+    LP.Character.HumanoidRootPart.CFrame = CFrame.new(RE)
+end)
+
+teams:NewButton("Cop", "Changes user's team into Cop", function()
+    workspace.Remote.TeamEvent:FireServer("Bright blue") 
+end)
+
+teams:NewButton("Neatral", "Changes user's team into Neutral", function()
+    workspace.Remote.TeamEvent:FireServer("Medium stone grey") 
+end)
+
+fun:NewButton("Taze all", "Tazes all players in the criminal or prisoner team", function()
+        local function kill(a)
+	    local A_1 = 
+	    {
+	        [1] = {
+				["RayObject"] = Ray.new(Vector3.new(829.838562, 101.489998, 2331.25635), Vector3.new(-30.6540909, -5.42795324, 95.0308533)), 
+				["Distance"] = 15.355997085571, 
+				["Cframe"] = CFrame.new(826.616699, 100.8508, 2340.11279, 0.964640439, -0.00993416365, -0.263382077, 9.31322575e-10, 0.999289393, -0.0376908854, 0.263569355, 0.0363581516, 0.963954985), 
+				["Hit"] = a.Character.Torso
+	    	}
+	    }
+	    local A_2 = game.Players.LocalPlayer.Backpack["Taser"]
+	    local Event = game:GetService("ReplicatedStorage").ShootEvent
+	    Event:FireServer(A_1, A_2)
+	end
+	
+	for i,v in pairs(game.Players:GetChildren())do
+	    if v.Name ~= game.Players.LocalPlayer.Name then
+	        kill(v)
+	    end
+	end
+end)
+
+fun:NewButton("Kill All", "Kills all players in the server", function()
+    print("Clicked")
+end)
+
+fun:NewButton("Super punch", "Kills any player with one punch", function()
+mainRemotes = game.ReplicatedStorage
+meleeRemote = mainRemotes['meleeEvent']
+mouse = game.Players.LocalPlayer:GetMouse()
+punching = false
+cooldown = false
+
+function punch()
+cooldown = true
+local part = Instance.new("Part", game.Players.LocalPlayer.Character)
+part.Transparency = 1
+part.Size = Vector3.new(5, 2, 3)
+part.CanCollide = false
+local w1 = Instance.new("Weld", part)
+w1.Part0 = game.Players.LocalPlayer.Character.Torso
+w1.Part1 = part
+w1.C1 = CFrame.new(0,0,2)
+part.Touched:connect(function(hit)
+if game.Players:FindFirstChild(hit.Parent.Name) then
+local plr = game.Players:FindFirstChild(hit.Parent.Name)
+if plr.Name ~= game.Players.LocalPlayer.Name then
+part:Destroy()
+
+for i = 1,100 do
+meleeRemote:FireServer(plr)
+end
+end
+end
+end)
+
+wait(1)
+cooldown = false
+part:Destroy()
+end
+
+
+mouse.KeyDown:connect(function(key)
+if cooldown == false then
+if key:lower() == "f" then
+
+punch()
+
+end
+end
+end)
+
+end)
+
+human:NewSlider("WalkSpeed", "Can adjust walkspeed from 16 to 500!", 500, 16, function(s) -- 500 (MaxValue) | 0 (MinValue)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+end)
+
+human:NewSlider("JumpPower", "Can adjust JumpPower from 50 to 500!", 500, 50, function(s) -- 500 (MaxValue) | 0 (MinValue)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = s
+end)
+ultimate:NewButton("PrevailX", "A very op script for this game", function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/mHfK0Xk4", true))()
+end)
+
+human:NewButton("Noclip [E]", "Press E to toggle", function()
+    noclip = false
+game:GetService('RunService').Stepped:connect(function()
+if noclip then
+game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+end
+end)
+plr = game.Players.LocalPlayer
+mouse = plr:GetMouse()
+mouse.KeyDown:connect(function(key)
+
+if key == "e" then
+noclip = not noclip
+game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+end
+end)
+end)
+
+setting:NewKeybind("Toggle ui", "Toggles UI to be open or closed", Enum.KeyCode.v, function()
+	Library:ToggleUI()
+end)
