@@ -1,0 +1,143 @@
+local Load = Instance.new("ScreenGui")
+local container = Instance.new("Frame")
+local labelholder = Instance.new("Frame")
+local Title = Instance.new("TextLabel")
+local Versio = Instance.new("TextLabel")
+local Status = Instance.new("TextLabel")
+
+--Properties:
+
+Load.Name = "Load"
+Load.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+container.Name = "container"
+container.Parent = Load
+container.AnchorPoint = Vector2.new(0.5, 0.5)
+container.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+container.BorderColor3 = Color3.fromRGB(50, 50, 50)
+container.BorderSizePixel = 0
+container.Position = UDim2.new(0.5, 0, 0.5, 0)
+container.Size = UDim2.new(0, 11, 0, 11)
+
+labelholder.Name = "label holder"
+labelholder.Parent = container
+labelholder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+labelholder.BackgroundTransparency = 1.000
+labelholder.Position = UDim2.new(-0.0023605614, 0, -0.00355182658, 0)
+labelholder.Size = UDim2.new(0, 171, 0, 211)
+labelholder.Visible = false
+
+Title.Name = "Title"
+Title.Parent = labelholder
+Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Title.BackgroundTransparency = 1.000
+Title.Size = UDim2.new(0, 171, 0, 50)
+Title.Visible = false
+Title.Font = Enum.Font.Ubuntu
+Title.Text = "Project: PL"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextSize = 26.000
+Title.TextWrapped = true
+
+Versio.Name = "Version"
+Versio.Parent = labelholder
+Versio.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Versio.BackgroundTransparency = 1.000
+Versio.Position = UDim2.new(0, 0, 0.132701427, 0)
+Versio.Size = UDim2.new(0, 171, 0, 50)
+Versio.Visible = false
+Versio.Font = Enum.Font.Ubuntu
+Versio.Text = "Version: 1.0.2"
+Versio.TextColor3 = Color3.fromRGB(255, 255, 255)
+Versio.TextSize = 26.000
+Versio.TextWrapped = true
+
+Status.Name = "Status"
+Status.Parent = labelholder
+Status.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Status.BackgroundTransparency = 1.000
+Status.Position = UDim2.new(0, 0, 0.383886248, 0)
+Status.Size = UDim2.new(0, 171, 0, 50)
+Status.Visible = false
+Status.Font = Enum.Font.Ubuntu
+Status.Text = "Checking stuff.."
+Status.TextColor3 = Color3.fromRGB(255, 255, 255)
+Status.TextSize = 20.000
+Status.TextWrapped = true
+
+-- Scripts:
+
+local function GEQHRXM_fake_script() -- container.LocalScript 
+	local script = Instance.new('LocalScript', container)
+
+	local Tweencontainer = script.Parent
+
+	wait(1)
+
+	Tweencontainer:TweenSize(UDim2.new(0, 171, 0, 211))
+
+	wait(2)
+
+	labelholder.Visible = true
+
+	wait(0.5)
+
+	Title.Visible = true
+
+	wait(0.5)
+
+	Versio.Visible = true
+
+	wait(0.5)
+
+	Status.Visible = true
+
+	wait(1)
+
+	Status.Text = "Checking Version..."
+	
+	wait(3)
+	
+	if Versio.Text == "Version: 1.0.2" then
+		Status.Text = "Correct Version!"
+
+		wait(2)
+		
+		Status.Text = "Checking game"
+		
+		wait(1)
+		
+		if game.PlaceId == 155615604 then
+			Status.Text = "Correct game"
+			
+			wait(2)
+			
+			Status.Text = "Loading GUI"
+
+			wait(3)
+
+			Load:Destroy()
+
+			loadstring(game:HttpGet(("https://raw.githubusercontent.com/ViVaWareBoi/Project-PL/main/V1.0.2"), true))()
+
+		else
+			Status.Text = "Wrong game"
+			
+			wait(2)
+			
+			Status.Text = "Game copied to clipboard"
+			
+			setclipboard("https://www.roblox.com/games/155615604/Prison-Life-Cars-fixed")
+			
+			wait(2)
+			
+			Load:Destroy()
+		end		
+	else
+		Status.Text = "Wrong version!"
+		wait(2)
+		Load:Destroy()
+	end
+
+end
+coroutine.wrap(GEQHRXM_fake_script)()
